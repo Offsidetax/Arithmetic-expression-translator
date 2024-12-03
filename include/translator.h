@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include "stack.h"
@@ -6,7 +7,7 @@
 
 using namespace std;
 
-bool isNumber(const std::string& str) {
+inline bool isNumber(const std::string& str) {
 	if (str.empty()) return false;
 
 	for (size_t i = 0; i < str.length(); ++i) {
@@ -64,7 +65,7 @@ class Arithmetic_Expression {
 			case ')':
 				if (bracketsNum == 0) {
 					std::cout << "Incorrect input of brackets!" << std::endl;
-					std::exit(EXIT_FAILURE);
+					throw "Incorrect input of brackets!";
 				}
 				bracketsNum--;
 				curItem += infix[i];
@@ -83,12 +84,12 @@ class Arithmetic_Expression {
 
 				if (isalpha(infix[i])) {
 					std::cout << "Incorrect variable input! (It can`t start with a number)" << std::endl;
-					std::exit(EXIT_FAILURE);
+					throw "Incorrect variable input! (It can`t start with a number)";
 				}
 
 				if ((dotNum > 1) || (infix[i - 1] == '.')) {
 					std::cout << "Incorrect decimal number input!" << std::endl;
-					std::exit(EXIT_FAILURE);
+					throw "Incorrect decimal number input!";
 				}
 				dotNum = 0;
 				lexems.push_back(curItem);
@@ -107,13 +108,13 @@ class Arithmetic_Expression {
 				}
 				else{
 					std::cout << "Unknown symbol -> " << infix[i] << std::endl;
-					std::exit(EXIT_FAILURE);
+					throw "Unknown symbol";
 				}
 			}
 		}
 		if (bracketsNum != 0) {
 			std::cout << "Incorrect input of brackets!" << std::endl;
-			std::exit(EXIT_FAILURE);
+			throw "Incorrect input of brackets!";
 		}
 
 	}
@@ -174,9 +175,6 @@ public:
 	Arithmetic_Expression(string expression): infix(expression) {
 		priority = { {"+", 1}, {"-", 1}, {"*", 2}, {"/", 2}, {"u-", 3} };
 		InfixToPostfix();
-		for (int i = 0; i < lexems.size(); i++) {
-			std::cout << lexems[i] << std::endl;
-		}
 	}
 
 	string GetInfix() const {
@@ -211,8 +209,8 @@ public:
 			string lexem = postfix[i];
 			if (lexem == "+") {
 				if (stSize<2) {
-					std::cout << "Incorrect input of operators!  (Operator '+')" << std::endl;
-					std::exit(EXIT_FAILURE);
+					std::cout << "Incorrect input!" << std::endl;
+					throw "Incorrect input!";
 				}
 
 				rOperand = st.top();
@@ -225,8 +223,8 @@ public:
 			}
 			else if (lexem == "-") {
 				if (stSize < 2) {
-					std::cout << "Incorrect input of operators!  (Operator '-')" << std::endl;
-					std::exit(EXIT_FAILURE);
+					std::cout << "Incorrect input!" << std::endl;
+					throw "Incorrect input!";
 				}
 				
 				rOperand = st.top();
@@ -239,8 +237,8 @@ public:
 			}
 			else if (lexem == "u-") {
 				if (stSize == 0) {
-					std::cout << "Incorrect input of operators!  (Unary operator '-')" << std::endl;
-					std::exit(EXIT_FAILURE);
+					std::cout << "Incorrect input!" << std::endl;
+					throw "Incorrect input!";
 				}
 
 				rOperand = st.top();
@@ -250,8 +248,8 @@ public:
 			}
 			else if (lexem == "*") {
 				if (stSize < 2) {
-					std::cout << "Incorrect input of operators!  (Operator '*')" << std::endl;
-					std::exit(EXIT_FAILURE);
+					std::cout << "Incorrect input!" << std::endl;
+					throw "Incorrect input!";
 				}
 
 				rOperand = st.top();
@@ -264,15 +262,15 @@ public:
 			}
 			else if (lexem == "/") {
 				if (stSize < 2) {
-					std::cout << "Incorrect input of operators!  (Operator '/')" << std::endl;
-					std::exit(EXIT_FAILURE);
+					std::cout << "Incorrect input!" << std::endl;
+					throw "Incorrect input!";
 				}
 
 				rOperand = st.top();
 				st.pop();
 				if (rOperand == 0) {
 					std::cout << "Error! Division by zero!" << std::endl;
-					std::exit(EXIT_FAILURE);
+					throw "Incorrect input!";
 				}
 				lOperand = st.top();
 				st.pop();
