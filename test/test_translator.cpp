@@ -77,10 +77,7 @@ TEST(Translator, throw_when_expression_contain_incorrect_floating_points){
 }
 
 TEST(Translator, throw_when_expression_contain_incorrect_operators) {
-	Arithmetic_Expression expr("12++12");
-	map<string, double> values;
-
-	ASSERT_ANY_THROW(expr.Calculate(values););
+	ASSERT_ANY_THROW(Arithmetic_Expression expr("12++12"));
 }
 
 TEST(Translator, throw_when_expression_contain_division_by_zero) {

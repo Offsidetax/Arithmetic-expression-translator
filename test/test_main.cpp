@@ -16,7 +16,7 @@ bool StrIsNumber(const std::string& str) {
     return true;
 }
 
-int main(int argc, char **argv) {
+/*int main(int argc, char** argv) {
     int mode = -1;
 
     cout << "Arithmetic translator \n" << "Type 0 to start tests or 1 to use the translator" << endl;
@@ -72,4 +72,40 @@ int main(int argc, char **argv) {
 
         return 0;
     }
+}*/
+
+int main() {
+    cout << "Arithmetic translator supports variables and operations +,-,*,/,unary minus\n" << "Input expression without spaces\n" << "Input variable value after inputing the expression\n" << endl;
+
+    while (true) {
+        //////////////////////INPUT EXPRESSION//////////////////////
+        string input;
+        cout << "Enter expression: \n";
+        cin >> input;
+
+        Arithmetic_Expression expr(input);
+        vector<string> postfix = expr.GetPostfix();
+        ////////////////////////////////////////////////////////////
+        
+
+        //////////////////////GETTING OPERANDS VALUE////////////////
+        vector<string> operands = expr.GetOperands();
+        map<string, double> values;
+        double val;
+
+        for (const auto& op : operands) {
+            if (!StrIsNumber(op)) {
+                cout << "Input value of operand " << op << endl;
+                cin >> val;
+                values[op] = val;
+            }
+        }
+        ////////////////////////////////////////////////////////////
+
+        //////////////////////CALCULATING///////////////////////////
+        cout << "Answer: " << expr.Calculate(values) << endl;
+        ////////////////////////////////////////////////////////////
+    }
+
+    return 0;
 }

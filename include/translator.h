@@ -34,6 +34,10 @@ class Arithmetic_Expression {
 		while(i < infix.length()) {
 			switch (infix[i]) {
 			case '+': case '*': case '/':
+				if ((i == infix.length() - 1) || (infix[i + 1] == '+') || (infix[i + 1] == '-') || (infix[i + 1] == '*') || (infix[i + 1] == '/')) {
+					std::cout << "Incorrect input of operators!" << std::endl;
+					throw "Incorrect input of operaators!";
+				}
 				curItem+=infix[i];	
 				lexems.push_back(curItem);
 				curItem.clear();
@@ -138,7 +142,8 @@ class Arithmetic_Expression {
 					st.pop();
 				}
 			}
-			else if ((lexems[i] == "+") || (lexems[i] == "-") || (lexems[i] == "*") || (lexems[i] == "/") || (lexems[i] == "u-")) {
+			else if ((lexems[i] == "+") || (lexems[i] == "-") ||
+				(lexems[i] == "*") || (lexems[i] == "/") || (lexems[i] == "u-")) {
 				while (!st.empty()) {
 					stackItem = st.top();
 					st.pop();
