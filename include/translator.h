@@ -291,7 +291,11 @@ public:
 
 	double res = st.top();
 	st.pop();
-
+	
+	if (!st.empty()) {
+		std::cout << "Incorrect expression!" << std::endl;
+		throw "Incorrect expression";
+	}
 	return res;
 	}
 };
